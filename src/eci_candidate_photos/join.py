@@ -8,7 +8,10 @@ differ slightly from ECI's final report) are joined by name, letters only,
 within the constituency. `join_basis` records which pass matched each row.
 
 Writes data/eci_results_join.csv and stops if any eci_results candidate or
-page candidate is left unmatched.
+page candidate is left unmatched. Each row carries eci_results' own key for the
+candidate: State_Name, Year, month, Poll_No, Constituency_No and Position, which
+are unique in eci_results. The name is not a key, because namesakes share a
+seat (16 pairs in the 2024 Lok Sabha).
 
     python -m eci_candidate_photos.join 2024_lok_sabha
 """
@@ -19,9 +22,10 @@ from pathlib import Path
 
 import pandas as pd
 
-from eci_candidate_photos.common import BUILD, check, election
+from eci_candidate_photos.common import BUILD, PHOTOS, check, election
 
 JOIN = Path("data/eci_results_join.csv")
+RESULTS_KEY = ["State_Name", "Year", "month", "Poll_No", "Constituency_No", "Position"]
 
 
 def state_key(text):
@@ -45,12 +49,12 @@ def main(name):
     page = page[~page["nota"]].copy()
     for frame, col in ((results, "State_Name"), (page, "state_eci")):
         frame["state_key"] = frame[col].map(state_key)
-    results = results.rename(columns={"Constituency_No": "constituency_no"})
+    results["constituency_no"] = results["Constituency_No"]
     results["votes"] = results["Votes"]
     for frame, col in ((results, "Candidate"), (page, "candidate")):
         frame["name_key"] = frame[col].map(name_key)
     seat = ["state_key", "constituency_no"]
-    keep = ["eci_results_row", "Candidate", "Party"]
+    keep = ["eci_results_row", "Candidate", "Party"] + RESULTS_KEY
     # Pass 1: votes, where a count is unique within its constituency on both sides.
     key = seat + ["votes"]
     unique_page = ~page.duplicated(key, keep=False) & page["votes"].notna()
@@ -104,7 +108,7 @@ def main(name):
         "votes",
         "eci_results_votes",
         "join_basis",
-        "eci_results_row",
+        *RESULTS_KEY,
         "Candidate",
         "Party",
         "name_overlap",
@@ -113,8 +117,13 @@ def main(name):
     out = joined[both][cols].rename(
         columns={"Candidate": "eci_results_candidate", "Party": "eci_results_party"}
     )
-    out["eci_results_row"] = out["eci_results_row"].astype("Int64")
-    previous = pd.read_csv(JOIN) if JOIN.exists() else pd.DataFrame(columns=cols)
+    for col in ["Year", "month", "Poll_No", "Constituency_No", "Position"]:
+        out[col] = out[col].astype("Int64")
+    out["photo_path"] = [
+        f"{PHOTOS}/{name}/{url.rsplit('/', 1)[1]}" for url in out["photo_url"]
+    ]
+    previous = pd.read_csv(JOIN) if JOIN.exists() else pd.DataFrame()
+    previous = previous.reindex(columns=out.columns)
     previous = previous[previous["election"] != name]
     pd.concat([previous, out]).sort_values(
         ["election", "page", "order_on_page"]
