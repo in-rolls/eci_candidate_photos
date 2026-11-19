@@ -1,4 +1,4 @@
-.PHONY: sync pages parse join photos all test lint
+.PHONY: sync pages parse join audit photos all test lint
 
 ELECTION ?= 2024_lok_sabha
 
@@ -15,6 +15,10 @@ parse:
 # Stops if any candidate fails to join to eci_results; run before fetching photos.
 join: parse
 	uv run python -m eci_candidate_photos.join $(ELECTION)
+
+# Checks the join for every election by a second route; see audit.py.
+audit:
+	uv run python -m eci_candidate_photos.audit
 
 # One request per second; resumable.
 photos: join

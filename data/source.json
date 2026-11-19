@@ -5,7 +5,11 @@
       "eci_results": {
         "path": "data/reference/GE_2024.csv.gz",
         "url": "https://raw.githubusercontent.com/in-rolls/eci_results/d1f308ad443b079d1d636ba9b85da5774ffe0954/data/release/GE_2024.csv.gz",
-        "sha256": "0b3d27bd13e6747f6fc90a2090a70ec8cf6195ef87c90781d927c679bf325c5f"
+        "sha256": "0b3d27bd13e6747f6fc90a2090a70ec8cf6195ef87c90781d927c679bf325c5f",
+        "select": {
+          "Year": 2024,
+          "month": 6
+        }
       },
       "not_in_eci_results": [
         {
@@ -14,6 +18,122 @@
           "reason": "Surat was won unopposed; ECI's report 33, which eci_results reads, leaves the seat out"
         }
       ]
+    },
+    "2023_12_assemblies": {
+      "folder": "AcResultGenDecNew2023",
+      "eci_results": {
+        "path": "data/reference/AE_2023_2026.csv.gz",
+        "url": "https://raw.githubusercontent.com/in-rolls/eci_results/d1f308ad443b079d1d636ba9b85da5774ffe0954/data/release/AE_2023_2026.csv.gz",
+        "sha256": "b4b263869d25c60a749b82b3bdd24e2e4147e089276228779317b880b47d7d7f",
+        "select": {
+          "Year": 2023,
+          "month": 12
+        }
+      }
+    },
+    "2024_01_karanpur": {
+      "folder": "AcResultByeJan2024",
+      "eci_results": {
+        "path": "data/reference/AE_2023_2026.csv.gz",
+        "url": "https://raw.githubusercontent.com/in-rolls/eci_results/d1f308ad443b079d1d636ba9b85da5774ffe0954/data/release/AE_2023_2026.csv.gz",
+        "sha256": "b4b263869d25c60a749b82b3bdd24e2e4147e089276228779317b880b47d7d7f",
+        "select": {
+          "Year": 2024,
+          "month": 1
+        }
+      }
+    },
+    "2024_06_andhra_odisha": {
+      "folder": "AcResultGenJune2024",
+      "eci_results": {
+        "path": "data/reference/AE_2023_2026.csv.gz",
+        "url": "https://raw.githubusercontent.com/in-rolls/eci_results/d1f308ad443b079d1d636ba9b85da5774ffe0954/data/release/AE_2023_2026.csv.gz",
+        "sha256": "b4b263869d25c60a749b82b3bdd24e2e4147e089276228779317b880b47d7d7f",
+        "select": {
+          "Year": 2024,
+          "month": 6,
+          "State_Name": [
+            "Andhra_Pradesh",
+            "Odisha"
+          ]
+        }
+      }
+    },
+    "2024_06_arunachal_sikkim": {
+      "folder": "AcResultGen2ndJune2024",
+      "eci_results": {
+        "path": "data/reference/AE_2023_2026.csv.gz",
+        "url": "https://raw.githubusercontent.com/in-rolls/eci_results/d1f308ad443b079d1d636ba9b85da5774ffe0954/data/release/AE_2023_2026.csv.gz",
+        "sha256": "b4b263869d25c60a749b82b3bdd24e2e4147e089276228779317b880b47d7d7f",
+        "select": {
+          "Year": 2024,
+          "month": 6,
+          "State_Name": [
+            "Arunachal_Pradesh",
+            "Sikkim"
+          ]
+        }
+      }
+    },
+    "2024_10_haryana_jk": {
+      "folder": "AcResultGenOct2024",
+      "eci_results": {
+        "path": "data/reference/AE_2023_2026.csv.gz",
+        "url": "https://raw.githubusercontent.com/in-rolls/eci_results/d1f308ad443b079d1d636ba9b85da5774ffe0954/data/release/AE_2023_2026.csv.gz",
+        "sha256": "b4b263869d25c60a749b82b3bdd24e2e4147e089276228779317b880b47d7d7f",
+        "select": {
+          "Year": 2024,
+          "month": 10
+        }
+      }
+    },
+    "2024_11_maharashtra_jharkhand": {
+      "folder": "ResultAcGenNov2024",
+      "eci_results": {
+        "path": "data/reference/AE_2023_2026.csv.gz",
+        "url": "https://raw.githubusercontent.com/in-rolls/eci_results/d1f308ad443b079d1d636ba9b85da5774ffe0954/data/release/AE_2023_2026.csv.gz",
+        "sha256": "b4b263869d25c60a749b82b3bdd24e2e4147e089276228779317b880b47d7d7f",
+        "select": {
+          "Year": 2024,
+          "month": 11
+        }
+      }
+    },
+    "2025_02_delhi": {
+      "folder": "ResultAcGenFeb2025",
+      "eci_results": {
+        "path": "data/reference/AE_2023_2026.csv.gz",
+        "url": "https://raw.githubusercontent.com/in-rolls/eci_results/d1f308ad443b079d1d636ba9b85da5774ffe0954/data/release/AE_2023_2026.csv.gz",
+        "sha256": "b4b263869d25c60a749b82b3bdd24e2e4147e089276228779317b880b47d7d7f",
+        "select": {
+          "Year": 2025,
+          "month": 2
+        }
+      }
+    },
+    "2025_11_bihar": {
+      "folder": "ResultAcGenNov2025",
+      "eci_results": {
+        "path": "data/reference/AE_2023_2026.csv.gz",
+        "url": "https://raw.githubusercontent.com/in-rolls/eci_results/d1f308ad443b079d1d636ba9b85da5774ffe0954/data/release/AE_2023_2026.csv.gz",
+        "sha256": "b4b263869d25c60a749b82b3bdd24e2e4147e089276228779317b880b47d7d7f",
+        "select": {
+          "Year": 2025,
+          "month": 11
+        }
+      }
+    },
+    "2026_05_assemblies": {
+      "folder": "ResultAcGenMay2026",
+      "eci_results": {
+        "path": "data/reference/AE_2023_2026.csv.gz",
+        "url": "https://raw.githubusercontent.com/in-rolls/eci_results/d1f308ad443b079d1d636ba9b85da5774ffe0954/data/release/AE_2023_2026.csv.gz",
+        "sha256": "b4b263869d25c60a749b82b3bdd24e2e4147e089276228779317b880b47d7d7f",
+        "select": {
+          "Year": 2026,
+          "month": 5
+        }
+      }
     }
   }
 }

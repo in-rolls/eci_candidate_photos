@@ -26,8 +26,8 @@ PAGE = """
 
 
 def test_page_gives_seat_candidates_votes_and_photo():
-    number, seat, state, rows = parse_page(PAGE)
-    assert (number, seat, state) == (10, "Eluru", "Andhra Pradesh")
+    heading, rows = parse_page(PAGE)
+    assert heading == "10 - Eluru (Andhra Pradesh)"
     first, nota = rows
     assert first["candidate"] == "PUTTA MAHESH KUMAR"
     assert first["votes"] == 746351 and first["result"] == "won"
@@ -41,3 +41,23 @@ def test_state_names_from_eci_and_tcpd_agree():
     assert state_key("Dadra & Nagar Haveli and Daman & Diu") == state_key(
         "Dadra_&_Nagar_Haveli_&_Daman_&_Diu"
     )
+
+
+HINDI = """
+<h2><span>विधानसभा क्षेत्र भिण्ड (मध्य प्रदेश)</span></h2>
+<div class='cand-box'>
+  <figure><img src='HINDI_PHOTO'></figure>
+  <div class='status won'><div>विजयी</div><div>66420 <span>(+ 14146)</span></div></div>
+  <h5>नरेन्द्र सिंह कुशवाह</h5><h6>भारतीय जनता पार्टी</h6>
+</div>
+""".replace(
+    "HINDI_PHOTO",
+    "https://results.eci.gov.in/uploads1/candprofile/S12/NAREN-2023-1.jpg",
+)
+
+
+def test_hindi_page_gives_result_votes_and_photo():
+    heading, (row,) = parse_page(HINDI)
+    assert heading == "विधानसभा क्षेत्र भिण्ड (मध्य प्रदेश)"
+    assert row["result"] == "won" and row["votes"] == 66420
+    assert row["photo_url"].endswith("NAREN-2023-1.jpg")

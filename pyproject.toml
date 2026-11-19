@@ -9,9 +9,13 @@ license-files = ["LICENSE"]
 keywords = ["India", "elections", "ECI", "candidates", "photographs"]
 dependencies = [
     "beautifulsoup4>=4.13",
+    "indic-transliteration>=2.3.82",
+    "lxml>=6.1.3",
     "pandas>=2.2",
     "pillow>=11",
+    "rapidfuzz>=3.14.6",
     "requests>=2.32",
+    "scipy>=1.18.1",
     "tenacity>=9",
 ]
 
