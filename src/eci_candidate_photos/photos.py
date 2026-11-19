@@ -33,11 +33,16 @@ def fetch(url):
 
 
 def main(name):
-    join = pd.read_csv(JOIN)
+    join = pd.read_csv(JOIN, low_memory=False)
     join = join[join["election"] == name]
     manifest = pd.read_csv(MANIFEST) if MANIFEST.exists() else pd.DataFrame()
     done = (
-        set(manifest.loc[manifest["status"] == "ok", "photo_url"])
+        set(
+            manifest.loc[
+                (manifest["status"] == "ok") & (manifest["election"] == name),
+                "photo_url",
+            ]
+        )
         if len(manifest)
         else set()
     )
@@ -46,7 +51,10 @@ def main(name):
     out.mkdir(parents=True, exist_ok=True)
     todo = join[~join["photo_url"].isin(done)].drop_duplicates("photo_url")
     print(f"{name}: {len(todo)} photos to fetch, {len(done)} already saved")
-    rows = [r for r in rows if r["photo_url"] not in set(todo["photo_url"])]
+    todo_urls = set(todo["photo_url"])
+    rows = [
+        r for r in rows if not (r["election"] == name and r["photo_url"] in todo_urls)
+    ]
     for i, item in enumerate(todo.itertuples(), start=1):
         path = out / item.photo_url.rsplit("/", 1)[1]
         content, where = fetch(item.photo_url)
