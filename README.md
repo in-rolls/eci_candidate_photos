@@ -18,6 +18,12 @@ printed it next to their name on the ballot.
 - [`data/manifest.csv`](data/manifest.csv): each photo's URL, source, retrieval
   time, SHA-256, size in bytes and pixel dimensions.
 
+A fixed copy is on Zenodo,
+[doi:10.5281/zenodo.24395870](https://doi.org/10.5281/zenodo.24395870), with
+the photos in one zip per election. That DOI always resolves to the latest
+version; version v2026.11 (commit 3f9ddb2) is
+[doi:10.5281/zenodo.24395871](https://doi.org/10.5281/zenodo.24395871).
+
 ## Coverage
 
 | Election | States | Candidates with a photo |
