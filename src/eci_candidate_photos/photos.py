@@ -13,6 +13,7 @@ import sys
 from pathlib import Path
 
 import pandas as pd
+import requests
 from PIL import Image
 
 from eci_candidate_photos.common import PHOTOS, get, now, sha256
@@ -21,15 +22,28 @@ from eci_candidate_photos.join import JOIN
 MANIFEST = Path("data/manifest.csv")
 
 
+def attempt(url, timeout):
+    """(JPEG bytes or None, what happened). A host that times out (ECI's
+    encore.eci.gov.in, which serves Karanpur's photos, stopped answering in
+    November 2026) is an answer for this photo, not a reason to stop the run."""
+    try:
+        response = get(url, timeout=timeout)
+    except requests.RequestException as error:
+        return None, type(error).__name__
+    if response.status_code == 200 and response.content[:3] == b"\xff\xd8\xff":
+        return response.content, "ok"
+    return None, f"HTTP {response.status_code}"
+
+
 def fetch(url):
     """(bytes, where) from ECI, else from the Wayback Machine; (None, reason)."""
-    response = get(url, timeout=30)
-    if response.status_code == 200 and response.content[:3] == b"\xff\xd8\xff":
-        return response.content, "eci"
-    archived = get(f"https://web.archive.org/web/2026id_/{url}", timeout=60)
-    if archived.status_code == 200 and archived.content[:3] == b"\xff\xd8\xff":
-        return archived.content, "wayback"
-    return None, f"eci HTTP {response.status_code}, wayback HTTP {archived.status_code}"
+    content, eci = attempt(url, 30)
+    if content:
+        return content, "eci"
+    content, wayback = attempt(f"https://web.archive.org/web/2026id_/{url}", 60)
+    if content:
+        return content, "wayback"
+    return None, f"eci {eci}, wayback {wayback}"
 
 
 def main(name):
